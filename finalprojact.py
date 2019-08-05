@@ -1,6 +1,6 @@
 import turtle
 import time
-#import random
+import random
 #import winsound
 
 turtle.tracer(1.0)#MOVE SMOOTHLY
@@ -8,7 +8,10 @@ turtle.tracer(1.0)#MOVE SMOOTHLY
 x_size=1000
 y_size=1000
 turtle.setup(x_size,y_size) #WINDOW SIZE
-
+BAG_TIME_STEP=100
+bag_list=[]
+bag_pos=[]
+bag=turtle.clone()
 TURTLE_LIST=['t1.gif','t2.gif','t3.gif','t4.gif','t5.gif']
 PLASTIC_LIST=['p1.gif','p2.gif','p3.gif','p4.gif','p5.gif']
 JELLY_FISH=[]
@@ -42,30 +45,42 @@ instructor.clear()
 turtle.hideturtle()
 
 
-        
+seaturtle=turtle.Turtle()        
+for i in TURTLE_LIST: #registers a turtle shape out of the list
+    turtle.register_shape (i)
 
 
-
-seaturtle=turtle.Turtle()
+#up and down... movement
 direction='none'
 def up ():
     direction='up'
     print('you pressed the up button')
-    seaturtle.register_shape('t4.gif')
+    seaturtle.shape('t4.gif')
 def right ():
     direction='right'
     print('you pressed the right button')
-    seaturtle.register_shape('t2.gif')
+    seaturtle.shape('t2.gif')
 
 def left():
     direction='left'
-    print('oyu pressed the left button')
-    seaturtle.register_shape('t1.gif')
+    print('you pressed the left button')
+    seaturtle.shape('t1.gif')
 def down ():
     direction='down'
     print('you pressed the down button')
-    turtle.register_shape('t5.gif')
+    seaturtle.shape('t5.gif')
 
+
+
+     
+    
+
+
+
+
+
+
+    
 turtle.onkeypress(up,'Up')
 turtle.onkeypress(down,'Down')
 turtle.onkeypress(left,'Left')
@@ -74,21 +89,44 @@ turtle.listen()
 
 #make new turtle
 #level one
-seaturtle.penup()
+
+
+#seaturtle.penup()
 def move_seaturtle():
     my_pos=seaturtle.pos()
-    x_pos=[0]
-    y_pos=[1]
+    x_pos=my_pos[0]
+    y_pos=my_pos[1]
+
+
+
+    
     if direction==up:
         seaturtle.goto(x_pos,y_pos+SQUARE_SIZE)
+        #seaturtle.forward(SQAURE_SIZE)
         print('moved up')
-    if directon==down:
+    elif direction==down:
         seaturtle.goto(x_pos,y_pos-SQUARE_SIZE)
         print('you moved down')
-        seaturtle.ontimer(move_seaturtle,TIME_STEP)
-        
-move_seaturtle()
+    
 
+
+def make_bag():
+    bag.penup()
+    line=random.randint(1,3)
+    if line==1:
+        bag.goto(500,seaturtle.ycor()+100)
+    if line==2:
+        bag.goto(500,seaturtle.ycor())
+    if line==3:
+        bag.goto(500,seaturtle.ycor()-100)
+    
+def move_bag():
+    x_bag=bag.pos()[0]
+    y_bag=bag.pos()[1]
+    bag.goto(x_bag-10,y_bag)
+    turtle.ontimer(move_bag,BAG_TIME_STEP)
+make_bag()
+move_bag()
 
 
 turtle.mainloop()
