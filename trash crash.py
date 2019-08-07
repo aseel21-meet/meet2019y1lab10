@@ -1,4 +1,3 @@
-
 import turtle
 import time
 import random
@@ -290,30 +289,89 @@ def move_trash():
     trash4.penup()
     trash5.penup()
     print("moving")
-    trash1_x=trash1.xcor()
-    dist1=-400-(trash1_x)
-    trash2_x=trash2.xcor()
-    dist2=-400-(trash2_x)
-    trash3_x=trash3.xcor()
-    dist3=-400-(trash3_x)
-    trash4_x=trash4.xcor()
-    dist4=-400-(trash4_x)
-    trash5_x=trash5.xcor()
-    dist5=-400-(trash5_x) 
+##    trash1_x=trash1.xcor()
+##    dist1=-400-(trash1_x)
+##    trash2_x=trash2.xcor()
+##    dist2=-400-(trash2_x)
+##    trash3_x=trash3.xcor()
+##    dist3=-400-(trash3_x)
+##    trash4_x=trash4.xcor()
+##    dist4=-400-(trash4_x)
+##    trash5_x=trash5.xcor()
+##    dist5=-400-(trash5_x) 
+##
+##    trash1.forward((dist1))
+##    trash2.forward((dist2))
+##    trash3.forward((dist3))
+##    trash4.forward((dist4))
+##    trash5.forward((dist5))
+    id1_ls=[]
+    id2_ls=[]
+    id3_ls=[]
+    id4_ls=[]
+    id5_ls=[]
 
-    trash1.forward((dist1))
-    trash2.forward((dist2))
-    trash3.forward((dist3))
-    trash4.forward((dist4))
-    trash5.forward((dist5))
+    for step in range (30):
+        
+        trash1.goto(trash1.xcor()-SQUARE_SIZE,trash1.ycor())
+        id1=trash1.stamp()
+        id1_ls.append(id1)
+        if dist(seaturtle.pos(),id1.pos())<45 :
+            turtle.hideturtle()
+            turtle.penup()
+            turtle.goto(0,0)
+            turtle.write('loser',move=False,align='center',font=('arial',18,'normal'))
+            quit()
+        trash1.goto(trash1.xcor()-SQUARE_SIZE,trash1.ycor())
+        trash1.clearstamp(id1)
+        id1_ls.pop(0)
+        
+        
+    for step in range (40):
+        
+        trash2.goto(trash2.xcor()-SQUARE_SIZE,trash2.ycor())
+        id1=trash2.stamp()
+        id2_ls.append(id2)
+        trash2.goto(trash2.xcor()-SQUARE_SIZE,trash2.ycor())
+        trash2.clearstamp(id2)
+        id2_ls.pop(0)
+         
+    for step in range (40):
+        
+        trash3.goto(trash3.xcor()-SQUARE_SIZE,trash3.ycor())
+        id3=trash3.stamp()
+        id3_ls.append(id3)
+        trash3.goto(trash3.xcor()-SQUARE_SIZE,trash3.ycor())
+        trash3.clearstamp(id3)
+        id3_ls.pop(0)
+    for step in range (40):
+        
+        trash4.goto(trash4.xcor()-SQUARE_SIZE,trash4.ycor())
+        id4=trash4.stamp()
+        id4_ls.append(id4)
+        trash4.goto(trash4.xcor()-SQUARE_SIZE,trash4.ycor())
+        trash4.clearstamp(id4)
+        id4_ls.pop(0)
+        
+    for step in range (40):
+        
+        trash5.goto(trash5.xcor()-SQUARE_SIZE,trash5.ycor())
+        id5=trash5.stamp()
+        id5_ls.append(id5)
+        trash5.goto(trash5.xcor()-SQUARE_SIZE,trash5.ycor())
+        trash5.clearstamp(id5)
+        id5_ls.pop(0)
+        
+    
+    
     move_jelly()
     #if (seaturtle.pos()==trash1.pos(0 or seaturtle.pos()==trash2.pos() or seaturtle.pos()==trash3.pos() or seaturtle.pos()==trash4.pos() or seaturtle.pos()==trash5.pos():
-    if dist(seaturtle.pos(),trash1.pos())<45 or dist(seaturtle.pos(),trash2.pos())<45 or dist(seaturtle.pos(),trash3.pos())<45 or dist(seaturtle.pos(),trash4.pos())<45 or dist(seaturtle.pos(),trash5.pos())<45:
-        turtle.hideturtle()
-        turtle.penup()
-        turtle.goto(0,0)
-        turtle.write('loser',move=False,align='center',font=('arial',18,'normal'))
-        quit()
+##    if dist(seaturtle.pos(),trash1.pos())<45 or dist(seaturtle.pos(),trash2.pos())<45 or dist(seaturtle.pos(),trash3.pos())<45 or dist(seaturtle.pos(),trash4.pos())<45 or dist(seaturtle.pos(),trash5.pos())<45:
+##        turtle.hideturtle()
+##        turtle.penup()
+##        turtle.goto(0,0)
+##        turtle.write('loser',move=False,align='center',font=('arial',18,'normal'))
+##        quit()
     
    
     turtle.ontimer(move_trash, 200)
@@ -334,5 +392,6 @@ move_jelly()
 
 
 turtle.mainloop()
+
 
 
