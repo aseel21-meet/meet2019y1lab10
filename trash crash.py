@@ -1,53 +1,37 @@
 import turtle
 import time
 import random
-#import winsound
 turtle.bgpic('water.gif')
 turtle.tracer(1.0)#MOVE SMOOTHLY
 
 x_size=1000
 y_size=1000
 turtle.setup(x_size,y_size) #WINDOW SIZE
-
+global timess
+timess=0
 
 PLASTIC_LIST=['p1.gif','p2.gif','p3.gif','p4.gif','p5.gif']#list of all the plastic pics we have
 
 SONGS_LIST=[] #later use
 
 SQUARE_SIZE=20
-TIME_STEP=50 #speed
+TIME_STEP=100 #speed
 SCREEN_X = 800
 SCREEN_Y = 800
 
-##border=turtle.Turtle() #drawing the actual game bored in the screen wich is 800 on 800
-##border.penup()
-##border.goto(-400,400)
-##border.pendown()
-##border.goto(400,400)
-##border.goto(400,-400)
-##border.goto(-400,-400)
-##border.goto(-400,400)
-##border.hideturtle()
-
-
-#create the game ored-design
 
 title='trash crash'
-
-
-
-
 
 #the title and instructions showing off on screen at the beggining
 
 instructions='1.avoid the trash\n 2.eat the jellyfish\n 3.you may only use the up and down buttons\n  4.have fun'
-turtle.color('blue')
+turtle.color('pink')
 turtle.penup()
-turtle.goto(0,400)
+turtle.goto(0,450)
 turtle.write(title,move=False,align='center',font=('arial',18,'normal'))
 turtle.hideturtle()
 instructor=turtle.Turtle()
-instructor.color('pink')
+instructor.color('green')
 instructor.penup()
 instructor.goto(0,0)
 instructor.write(instructions,move=False,align='center',font=('arial',18,'normal'))
@@ -55,6 +39,7 @@ instructor.hideturtle()
 time.sleep(1)  #after 3 secounds it disapears
 instructor.clear()
 turtle.hideturtle()
+turtle.color('red')
 
 
 seaturtle=turtle.Turtle()  #main turtle the user can play with       
@@ -90,6 +75,8 @@ def down():
 turtle.onkeypress(up, "Up") # Create listener for up key
 turtle.onkeypress(down,"Down")
 turtle.listen()
+def dist(pos1, pos2):
+    return ((pos1[0]-pos2[0])**2+(pos1[1]-pos2[1])**2)**0.5
 
 def move_seaturtle():
     my_pos = seaturtle.pos()
@@ -115,7 +102,7 @@ def move_seaturtle():
         print("you moved down!")
      
     
-    
+  #making jelly fish  
 turtle.register_shape('jf.gif')
 jelly1=turtle.Turtle()
 jelly1.hideturtle()
@@ -126,9 +113,9 @@ jelly2.shape('jf.gif')
 jelly3=turtle.Turtle()
 jelly3.hideturtle()
 jelly3.shape('jf.gif')
-jelly1.speed(10)
-jelly2.speed(10)
-jelly3.speed(10)
+##jelly1.speed(10)
+##jelly2.speed(10)
+##jelly3.speed(10)
 
 score=0# score dont touch
 scoring=turtle.Turtle()
@@ -157,70 +144,62 @@ def make_jelly (): #maing  3 diff jelly fishes (they are turtles)
     jelly2.showturtle()
     jelly3.goto(jelly3_x_cor,jelly3_y_cor)
     jelly3.showturtle()
-
-
-
-
-  
-def move_jelly ():
+def reset_jelly(jelly):
+    print("*****RESETTING*******")
+    jelly.hideturtle()
     make_jelly()
-    
-    jelly1.penup()
-    jelly2.penup()
-    jelly3.penup()
-
-    #moving th three jelly in a designed-messy path
-    jelly1.left(90)
-    jelly1.circle(100,180)
-    jelly2.left(90)
-    jelly2.circle(100,180)
-    jelly3.left(90)
-    jelly3.circle(100,180)
-    jelly1.seth(0)
-    jelly1.circle(100,300)
-    jelly2.seth(0)
-    jelly2.circle(100,300)
-    jelly3.seth(0)
-    jelly3.circle(100,300)
-    jelly1.seth(90)
-    jelly1.circle(100,180)
-    jelly2.seth(90)
-    jelly2.circle(100,180)
-    jelly3.seth(90)
-    jelly3.circle(100,180)
-    jelly1.seth(0)
-    jelly1.circle(100,300)
-    jelly2.seth(0)
-    jelly2.circle(100,300)
-    jelly3.seth(0)
-    jelly3.circle(100,300)
-    jelly1.seth(90)
-    jelly1.circle(100,180)
-    jelly2.seth(90)
-    jelly2.circle(100,180)
-    jelly3.seth(90)
-    jelly3.circle(100,180)
-
-    if jelly1.pos() ==seaturtle.pos() or jelly2.pos() ==seaturtle.pos() or jelly3.pos() ==seaturtle.pos() : #if the user eats the jellyfish he/she gets one point
-        turtle.print('ate jellyfish yeyy')
+    jelly.showturtle()
+global side
+side =True
+jelly1.right(163)
+jelly2.right(163)
+jelly3.right(163)
+def go_jelly():
+    global side
+   
+    global timess
+    timess+=1
+   
+    jelly1.forward(4)
+    jelly2.forward(4)
+    jelly3.forward(4)
+    print(jelly1.pos())
+    if dist(jelly1.pos(),seaturtle.pos())<45 or dist(jelly2.pos(),seaturtle.pos())<45 or dist(jelly3.pos(),seaturtle.pos())<45 : #if the user eats the jellyfish he/she gets one point
+        print('*******************')
+        print(seaturtle.pos())
+        print(jelly1.pos())
+        print('**')
+        print(dist(jelly1.pos(),seaturtle.pos()))
+        print(dist(jelly2.pos(),seaturtle.pos()))
+        print(dist(jelly3.pos(),seaturtle.pos()))
+        print('ate jellyfish yeyy')
         global score  #scoring system
         score+=1
         scoring.clear()
         scoring.color('blue')
         scoring.write(score,align='center',move=False,font=('arial',18,'normal'))
         print('you scored')
-        if jelly1.pos() ==seaturtle.pos():  #to delet the one the user ate after the user scored 
-            jelly1.reset()
         
-        elif jelly2.pos() ==seaturtle.pos():
-            jelly2.reset()
-        elif jelly3.pos() ==seaturtle.pos():
-            jelly3.reset()
-  
-    #move_jelly()
-    move_trash()
-    turtle.ontimer(move_jelly, 20)
-
+    if dist(jelly1.pos(),seaturtle.pos())<45:  #to delet the one the user ate after the user scored 
+        reset_jelly(jelly1)
+    elif dist(jelly2.pos() ,seaturtle.pos())<45:
+        reset_jelly(jelly2)
+    elif dist(jelly3.pos() ,seaturtle.pos())<45:
+        reset_jelly(jelly3)
+    if timess==85:
+       
+        if side==True:
+            jelly2.right(50)
+            jelly1.right(50)
+            jelly3.right(50)
+        else:
+            jelly1.left(50)
+            jelly2.left(50)
+            jelly3.left(50)
+        side=not side
+        timess=0
+    turtle.ontimer(go_jelly, 10)
+ #trash gifs   
 turtle.register_shape('t1.gif')
 turtle.register_shape('t2.gif')
 turtle.register_shape('t3.gif')
@@ -256,6 +235,16 @@ def make_trash ():
     trash3.penup()
     trash4.penup()
     trash5.penup()
+    trash1.speed(10)
+    trash2.speed(10)
+    trash3.speed(10)
+    trash4.speed(10)
+    trash5.speed(10)
+    trash1.hideturtle()
+    trash2.hideturtle()
+    trash3.hideturtle()
+    trash4.hideturtle()
+    trash5.hideturtle()
     trash1_x_cor=random.randint(min_x,max_x)
     trash1_y_cor=random.randint(min_y,max_y)
     trash2_x_cor=random.randint(min_x,max_x)
@@ -278,8 +267,6 @@ def make_trash ():
     trash5.showturtle()
     
 
-def dist(pos1, pos2):
-    return ((pos1[0]-pos2[0])**2+(pos1[1]-pos2[1])**2)**0.5
 
 def move_trash():
     make_trash()
@@ -289,22 +276,7 @@ def move_trash():
     trash4.penup()
     trash5.penup()
     print("moving")
-##    trash1_x=trash1.xcor()
-##    dist1=-400-(trash1_x)
-##    trash2_x=trash2.xcor()
-##    dist2=-400-(trash2_x)
-##    trash3_x=trash3.xcor()
-##    dist3=-400-(trash3_x)
-##    trash4_x=trash4.xcor()
-##    dist4=-400-(trash4_x)
-##    trash5_x=trash5.xcor()
-##    dist5=-400-(trash5_x) 
-##
-##    trash1.forward((dist1))
-##    trash2.forward((dist2))
-##    trash3.forward((dist3))
-##    trash4.forward((dist4))
-##    trash5.forward((dist5))
+
     id1_ls=[]
     id2_ls=[]
     id3_ls=[]
@@ -315,32 +287,58 @@ def move_trash():
         
         trash1.goto(trash1.xcor()-SQUARE_SIZE,trash1.ycor())
         id1=trash1.stamp()
+        id1_pos = trash1.pos()
         id1_ls.append(id1)
-        if dist(seaturtle.pos(),id1.pos())<45 :
+        print(trash1.pos())
+        if dist(seaturtle.pos(),id1_pos)<45 :
             turtle.hideturtle()
             turtle.penup()
             turtle.goto(0,0)
-            turtle.write('loser',move=False,align='center',font=('arial',18,'normal'))
+            turtle.write('loser',move=False,align='center',font=('arial',32,'normal'))
             quit()
+        
         trash1.goto(trash1.xcor()-SQUARE_SIZE,trash1.ycor())
         trash1.clearstamp(id1)
+
         id1_ls.pop(0)
+        
         
         
     for step in range (40):
         
         trash2.goto(trash2.xcor()-SQUARE_SIZE,trash2.ycor())
-        id1=trash2.stamp()
+        id2=trash2.stamp()
+        id2_pos=trash2.pos()
         id2_ls.append(id2)
+        if dist(seaturtle.pos(),id2_pos)<45 :
+            turtle.hideturtle()
+            turtle.penup()
+            turtle.goto(0,0)
+            turtle.write('loser',move=False,align='center',font=('arial',32,'normal'))
+            quit()
+        
+
         trash2.goto(trash2.xcor()-SQUARE_SIZE,trash2.ycor())
         trash2.clearstamp(id2)
         id2_ls.pop(0)
+        if id2_pos[1]==-400:
+            break
          
     for step in range (40):
         
         trash3.goto(trash3.xcor()-SQUARE_SIZE,trash3.ycor())
         id3=trash3.stamp()
+        id3_pos=trash3.pos()
         id3_ls.append(id3)
+        if dist(seaturtle.pos(),id3_pos)<45 :
+            turtle.hideturtle()
+            turtle.penup()
+            turtle.goto(0,0)
+            turtle.write('loser',move=False,align='center',font=('arial',32,'normal'))
+            quit()
+        if id3_pos[1]==-400:
+           break     
+
         trash3.goto(trash3.xcor()-SQUARE_SIZE,trash3.ycor())
         trash3.clearstamp(id3)
         id3_ls.pop(0)
@@ -348,7 +346,17 @@ def move_trash():
         
         trash4.goto(trash4.xcor()-SQUARE_SIZE,trash4.ycor())
         id4=trash4.stamp()
+        id4_pos=trash4.pos()
         id4_ls.append(id4)
+        if dist(seaturtle.pos(),id4_pos)<45 :
+            turtle.hideturtle()
+            turtle.penup()
+            turtle.goto(0,0)
+            turtle.write('loser',move=False,align='center',font=('arial',32,'normal'))
+            quit()
+        if id4_pos[1]==-400:
+            break    
+
         trash4.goto(trash4.xcor()-SQUARE_SIZE,trash4.ycor())
         trash4.clearstamp(id4)
         id4_ls.pop(0)
@@ -357,34 +365,37 @@ def move_trash():
         
         trash5.goto(trash5.xcor()-SQUARE_SIZE,trash5.ycor())
         id5=trash5.stamp()
+        id5_pos=trash5.pos()
         id5_ls.append(id5)
+        if dist(seaturtle.pos(),id5_pos)<45 :
+            turtle.hideturtle()
+            turtle.penup()
+            turtle.goto(0,0)
+            turtle.write('loser',move=False,align='center',font=('arial',32,'normal'))
+            quit()
+        if id5_pos[1]==-400:
+            break    
+
         trash5.goto(trash5.xcor()-SQUARE_SIZE,trash5.ycor())
         trash5.clearstamp(id5)
         id5_ls.pop(0)
         
     
     
-    move_jelly()
-    #if (seaturtle.pos()==trash1.pos(0 or seaturtle.pos()==trash2.pos() or seaturtle.pos()==trash3.pos() or seaturtle.pos()==trash4.pos() or seaturtle.pos()==trash5.pos():
-##    if dist(seaturtle.pos(),trash1.pos())<45 or dist(seaturtle.pos(),trash2.pos())<45 or dist(seaturtle.pos(),trash3.pos())<45 or dist(seaturtle.pos(),trash4.pos())<45 or dist(seaturtle.pos(),trash5.pos())<45:
-##        turtle.hideturtle()
-##        turtle.penup()
-##        turtle.goto(0,0)
-##        turtle.write('loser',move=False,align='center',font=('arial',18,'normal'))
-##        quit()
     
-   
-    turtle.ontimer(move_trash, 200)
+
+    turtle.ontimer(move_trash, TIME_STEP)
     
 
     
     
 
         
-
-
+make_jelly()
+go_jelly()
 move_trash()
-move_jelly()
+
+
                   
 
 
